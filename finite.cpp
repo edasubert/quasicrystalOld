@@ -3,10 +3,6 @@
 #include "betaSet.h"
 
 #include <iostream>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <cstdlib>
 
 #define _ERROR_
 
@@ -18,23 +14,27 @@ struct division
 	betaSet length;
 	
 	bool operator<(division const &b) { 
-        return word < b.word;
+        return a < b.a;
     }
     
     bool operator==(division const &other) { 
-        return ( (word == other.word) );
+        return ( (a == other.a) && (b == other.b) );
     }
 };
 
-
-std::string getWord( betaSet c, betaSet d, int n)
+int main( int argc, char ** argv )
 {
-	
+	betaSet c, d;
+	betaSet a, b;
+	int n;
 	
 	betaSet S,M,L;
 	
-	betaSet a, b;
+	char OUTPUT;
 	
+	std::cin >> c >> d;
+	std::cin >> n;
+	std::cin >> OUTPUT;
 	
 	#ifndef _ERROR_
 	std::cout << "Input DONE" << std::endl;
@@ -96,7 +96,7 @@ std::string getWord( betaSet c, betaSet d, int n)
 	else
 	{
 		std::cout << "too big or too small window" << std::endl;
-		return std::string();
+		return 0;
 	}
 	
 	division cache;
@@ -148,8 +148,8 @@ std::string getWord( betaSet c, betaSet d, int n)
 		
 		for ( std::list<division>::iterator it = D.begin(); it != D.end(); ++it )
 		{
-			//if ( it->a == it->b )
-				//continue;
+			if ( it->a == it->b )
+				continue;
 			
 			u = steppingFunction( c, d, it->a );
 			v = steppingFunction( c, d, it->b, true );
@@ -273,53 +273,25 @@ std::string getWord( betaSet c, betaSet d, int n)
 		D = Dnew;
 		D.sort();
 	
-	}
 	
-	std::ostringstream oss;
-	
+	std::cout << "D dump" << std::endl;
 	for ( std::list<division>::iterator it = D.begin(); it != D.end(); ++it )
 	{
-		oss << it->word << '\t';
+		print( std::cout, it->a );
+		//std::cout << it->a;
+		std::cout << '\t';
+		print( std::cout, it->b );
+		//std::cout << it->b;
+		std::cout << '\t' << it->word << '\t';
+		print( std::cout, it->length );
+		std::cout << "\t= " << it->length << std::endl;
 	}
-	//std::cout << std::endl;
-	//print( std::cout, d-c );
-	//std::cout << std::endl;
+	std::cout << std::endl;
 	
-	return oss.str();
-}
-
-
-
-
-int main( int argc, char ** argv )
-{
 	
-	betaSet old;
-	std::string words;
-	
-	for ( betaSet i = betaSet::get( 4, -1 ); i <= betaSet::get( 1, 0 ); i= i + betaSet::get( 1, 0, 20000 ) )
-	{
-		std::string newWords = getWord( betaSet::get( 0, 0 ), i, 4 );
-		
-		if ( words == newWords )
-		{
-			old = i;
-			continue;
-		}
-		
-		std::cout << words << std::endl;
-		std::cout << newWords << std::endl;
-		
-		print( std::cout, old );
-		std::cout << std::endl;
-		print( std::cout, i );
-		std::cout << std::endl;
-		std::cout << " = " << old << std::endl;
-		std::cout << " = " << i << std::endl;
-		
-		words = newWords;
 	}
 	
+	std::cout << OUTPUT;
 	
 	return 0;
 }

@@ -1,7 +1,6 @@
 #include "generate.h"
 #include "geometricObject.h"
 #include "betaSet.h"
-#include "generate.h"
 
 #include <iostream>
 #include <fstream>
@@ -396,7 +395,7 @@ int main( int argc, char ** argv )
 	
 	std::string folder = argv[1];
 	std::string fileName = argv[2];
-	std::string fillColor = argv[3];
+	std::string fillColor = "nay";
 	
 	betaSet a,b;
 	
@@ -419,33 +418,32 @@ int main( int argc, char ** argv )
 	for ( std::list<CvoronoiCell<betaSet> >::iterator it = list.begin(); it != list.end(); ++it )
 	{
 			std::ostringstream oss;
-			oss << folder << "/" << fileName << ++count;
+			oss << folder << "/" << fileName << ++count << "_svg";
 			
 			std::ofstream myfile ( oss.str().c_str() );
 			
 			if (myfile.is_open())
 			{
-				myfile << "<svg " << "height=\"" << 2*30*Large << "\" width=\"" << 2*30*Large << "\"" << " >" << '\n';
+				myfile << "<svg " << " width=\"100\" height=\"100\" viewBox=\"-8 -8 16 16\" >" << '\n';
 				
-				myfile << "<g transform=\"scale(30,30)\">" << '\n';
-				
-				myfile << "<g transform=\"translate(" << Large << "," << Large << ")\">" << '\n';
+				//myfile << "<rect x=\"-8\" y=\"-8\" width=\"3\" height=\"3\" style=\"fill:rgb(255,255,255);stroke-width:0.1;stroke:rgb(0,0,0);fill-opacity:0\" />" << std::endl;
+
+				//myfile << "<text x=\"-8\" y=\"-6.2\" fill=\"black\" font-size=\"3\">" << count << "</text>" << std::endl;
+
+				myfile << "<!-- " << round(it->value()) << " -->" << std::endl;
 				myfile << "<g transform=\"scale(1,-1)\">" << '\n';
 				
 				it->colorify();
 				
 				it->svg( myfile );
 				
-				it->CarrierSet->svg( myfile );
+				//it->CarrierSet->svg( myfile );
 				
 				it->Center.setColor( "rgb(25,25,25)", "rgb(255,255,255)", "0.01em" );
 				it->Center.svg( myfile );
 				
 				
 				//it->Cell->svg( myfile );
-				
-				myfile << "</g>" << '\n';
-				myfile << "</g>" << '\n';
 				
 				myfile << "</g>" << '\n';
 				

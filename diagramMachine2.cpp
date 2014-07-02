@@ -37,9 +37,9 @@ int main( int argc, char ** argv )
 	
 	c = betaSet::get( 0, 0 );
 	x1 = betaSet::get(  100, 0 );
-	y1 = betaSet::get( 1260, 0 );
+	y1 = betaSet::get(  420, 0 );
 	x2 = betaSet::get(  100, 0 );
-	y2 = betaSet::get(  750, 0 );
+	y2 = betaSet::get(  250, 0 );
 	
 	y1 = x1 + y1;
 	y2 = x2 + y2;
@@ -138,7 +138,7 @@ int main( int argc, char ** argv )
 				
 		std::ofstream myfile ( oss.str().c_str() );
 		
-		myfile << "<svg width=\"3840\" height=\"2160\" viewBox=\"100 -402 450 337\">\n" << std::endl;
+		myfile << "<svg width=\"3840\" height=\"2160\" viewBox=\"80 -152 112.5 84.25\">\n" << std::endl;
 		myfile << "<g transform=\"scale(1,-1)\">" << '\n';
 		myfile << "<!-- ";
 		print( myfile, c );
